@@ -4,7 +4,13 @@ OAuth has a steep learning curve and there are many opportunities to make a mist
 
 This guidance is a work in progress list contains a list of common OAuth misconfigurations and bad practices.
 
-Many of these issues myself and colleagues have seen in the wild and some we’ve made the mistake ourselves – learn from these mistakes and build secure applications :)
+Many of these issues myself and colleagues have seen in the wild and some we’ve made ourselves – learn from these mistakes and build secure applications :)
+
+Thanks to my employer [Kodez](https://www.kodez.com.au) for support in putting this together and please reach out if you need assistance with Identity, Development or AppSec.
+
+## Contribution
+
+This article is currently a draft and looking for feedback/additional items so please feel free to submit a PR.
 
 ## OAuth Checks
 
@@ -15,7 +21,7 @@ Many of these issues myself and colleagues have seen in the wild and some we’v
 | Is the correct flow being used?  | OAuth offers several flows or approaches for different purposes. Some should never be used in certain situations such as Client Credentials flow for SPA applications as this will expose the secret. |
 | For applications using Client Credentials flow are they sharing Client id and Secret? | Each instance should have unique client credentials client and secret so can be revoked/ rotated if needed |
 | Are there any third party resources (scripts/images) referenced on OAuth flow pages and leaking credentials? | If third party resources referenced on OAuth flow pages may leak details. Use Referrer-Policy: no-referrer or meta referrer to prevent this |
-| Does the application have a restrictive set of redirect urls? | Most Identity providers will enforce setting redirect urls. Redirect urls should be as restrictive as possible to prevent attacker constructing a URL that will redirect to a malicious endpoint to harvest details. |
+| Does the application have a restrictive set of redirect urls? | Most Identity providers will enforce setting redirect urls. Redirect urls should be as restrictive as possible to prevent attacker constructing a URL that will redirect to a malicious endpoint to harvest details |
 | Is the redirect url verification safe? | Ensure valid redirect url checks match exactly and cannot be circumvented by methods such as path transversal etc |
 | Is the application vulnerable to open redirect? | If application contains open redirect issue and this page is contained in valid redirect urls then an attacker could use this to redirect credentials to their server |
 | Does redirect url allow use of localhost? | Sometimes for development purposes redirect urls set to localhost may be treated differently and allowed. This would allow an attacker to register a domain such as localhost.simpleisbest.co.uk to harvest request details. [Paypal (2016) suffered from this issue](https://www.bleepingcomputer.com/news/security/paypal-removes-magic-word-from-oauth-authentication-procedure/) |
