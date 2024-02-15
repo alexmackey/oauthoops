@@ -2,9 +2,11 @@
 
 OAuth has a steep learning curve and there are many opportunities to make a mistake.
 
-This guidance is a work in progress list contains a list of common OAuth misconfigurations and bad practices.
+This guidance is a work in progress and contains a list of common OAuth related mistakes and bad practices.
 
-Many of these issues myself and colleagues have seen in the wild and some we’ve made ourselves – learn from these mistakes and build secure applications :)
+This guide focuses on OAuth v2.1​ and friends. These friends have their own distinct standards and include OpenID, JWT (JSON Web Token or RFC 7519), JWS (JSON Web Signatures)​ and JOSE (JavaScript Object Signing and Encryption). Issues impacting these are included as they are often found as part of OAuth implementations. 
+
+Many of these mistakes myself and colleagues have seen in the wild and some we’ve made ourselves – let's learn from these issues and build secure applications :smile:
 
 ## Support
 
@@ -12,7 +14,7 @@ Thanks to my employer [Kodez](https://www.kodez.com.au) for support in putting t
 
 ## Contribution
 
-This article is currently a draft and looking for feedback/additional items so please feel free to submit a PR.
+This article is in draft status and looking for feedback - PR's welcome.
 
 ## OAuth Checks
 
