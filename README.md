@@ -26,6 +26,7 @@ Many of these issues myself and colleagues have seen in the wild and some we’v
 ## Desktop or Mobile Applications Only Checks
 
 | Item | Description |
+| -------- | ------- |
 | Is the native or mobile application using Client Credentials Flow or have embedded secrets | Client Credentials Flow should not be used for mobile applications as client secret could be extracted from application. This issue occurred with [Twitter Mobile app, 2010](https://arstechnica.com/information-technology/2010/09/twitter-a-case-study-on-how-to-do-oauth-wrong/2/) |
 | Does the application use the devices browser for login? | Mobile applications should use Authorization Code Flow with PKCE with the devices browser. Providing the login screen in the application could allow application to grab username and password. Using the devices browser allows the user to benefit from browser security controls and extensions as per [rfc8252](https://datatracker.ietf.org/doc/html/rfc8252) |
 
@@ -33,6 +34,7 @@ Many of these issues myself and colleagues have seen in the wild and some we’v
 ## User Account Handling Checks
 
 | Item | Description |
+| -------- | ------- |
 | Is email/mobile ownership verified in application? | Without validating ownership of email/mobile number attacker may be able to take over accounts by creating a valid login and then updating email or mobile to victims details |
 | Can you chage email address or mobile be changed without verification? | Without validating ownership of email/mobile number attacker may be able to take over accounts by creating a valid login and then updating email or mobile to victims details |
 | Can you sign up for legitimate user address without verification and then have it linked to social account? | Some applications may allow users to link account to social login e.g. Facebook and could allow account take over via user registering valid account and then linking to Social account |
@@ -41,6 +43,7 @@ Many of these issues myself and colleagues have seen in the wild and some we’v
 ## Federated Identity Checks
 
 | Item | Description |
+| -------- | ------- |
 | Does the other identity provider(s) validate email/mobile ownership? | Without validation of email/mobile ownership there is potential for account takeover by creating user in external identity provider |
 | Does application validate the identity provider user is from? | Application should validate which identity provider has issued token for a user to prevent malicious external identity provider masquerading as a different identity providers user. Additionally, watch out for ability to specify multiple email addresses on account |
 
@@ -48,6 +51,7 @@ Many of these issues myself and colleagues have seen in the wild and some we’v
 ## Token/JWT checks
 
 | Item | Description |
+| -------- | ------- |
 | Are framework/library methods used to validate token? | Where possible tried and tested framework or libraries should be used to check tokens. Ensure methods are not just checking token structure but performing validation of Issuer, Audience, Expiry etc |
 | Is token using default signing key? | Some frameworks may contain a default signing key for tokens. This should be changed to prevent attacker minting their own tokens |
 | Is application checking only token Issuer (iss)? |If application is only checking Issuer (iss) for public identity provider then anyone can create a an identity tenant that will issue tokens the application will trust. Note we have found this issue several times so believe this is a common mistake |
@@ -64,6 +68,7 @@ Many of these issues myself and colleagues have seen in the wild and some we’v
 ## Microsoft AzureB2C/AD/Entra Specific Checks
 
 | Item | Description |
+| -------- | ------- |
 | Is application registered as any organisation directory? | If application is registered to allow any organisation directory then any user could set up AD to access application. See [Bing Bang](https://www.wiz.io/blog/azure-active-directory-bing-misconfiguration) |
 | Is application using organisational AD? | If application is using organisational AD then Office 365 guest users (e.g. that have O365 documents shared with them) may have valid token |
 
@@ -71,12 +76,14 @@ Many of these issues myself and colleagues have seen in the wild and some we’v
 ## Okta/Auth0 Specific Checks
 
 | Item | Description |
+| -------- | ------- |
 | Are attack protections enabled? | Auth0 contains various [attack protections](https://auth0.com/docs/secure/attack-protection) that can be enabled to prevent issues such as brute force attacks, suspicious logins, use of breached credentials  |
 
 
 ## Informational Checks
 
 | Item | Description |
+| -------- | ------- |
 | What identity provider(s) are used? | Determine the identity providers in use – there may be multiple and social login (Facebook etc) may be enabled |
 | Are meta data endpoints accessible? | Many identity providers will provide meta data about their configuration that can be read e.g. /.well-known/oauth-authorization-server /.well-known/openid-configuration |
 | What flows are enabled | Some identity providers will allow you to modify request parameters to use different flows |
