@@ -6,7 +6,9 @@ This guidance is a work in progress list contains a list of common OAuth misconf
 
 Many of these issues myself and colleagues have seen in the wild and some we’ve made ourselves – learn from these mistakes and build secure applications :)
 
-Thanks to my employer [Kodez](https://www.kodez.com.au) for support in putting this together and please reach out if you need assistance with Identity, Development or AppSec.
+## Support
+
+Thanks to my employer [Kodez](https://www.kodez.com.au) for support in putting this together and please reach out to Kodez for assistance with Identity, Development or AppSec.
 
 ## Contribution
 
@@ -16,20 +18,20 @@ This article is currently a draft and looking for feedback/additional items so p
 
 | Item    | Description |
 | -------- | ------- |
-| Is user sign-up enabled?  | Most identity providers have an option to enable/disable user sign-up. This should be disabled if not wanted otherwise any user could sign-up to your application. |
+| Is user sign-up enabled?  | Most identity providers have an option to enable/disable user sign-up. This should be disabled if not wanted otherwise any user could sign-up to your application |
 | Are older less secure flows enabled e.g. implicit flow? | If specific OAuth flows are not required they should be disabled to reduce attack surface and ensure most secure approach used |
-| Is the correct flow being used?  | OAuth offers several flows or approaches for different purposes. Some should never be used in certain situations such as Client Credentials flow for SPA applications as this will expose the secret. |
+| Is the correct flow being used?  | OAuth offers several flows or approaches for different purposes. Some should never be used in certain situations such as Client Credentials flow for SPA applications as this flow requires a client secret that would be exposed |
 | For applications using Client Credentials flow are they sharing Client id and Secret? | Each instance should have unique client credentials client and secret so can be revoked/ rotated if needed |
 | Are there any third party resources (scripts/images) referenced on OAuth flow pages and leaking credentials? | If third party resources referenced on OAuth flow pages may leak details. Use Referrer-Policy: no-referrer or meta referrer to prevent this |
-| Does the application have a restrictive set of redirect urls? | Most Identity providers will enforce setting redirect urls. Redirect urls should be as restrictive as possible to prevent attacker constructing a URL that will redirect to a malicious endpoint to harvest details |
-| Is the redirect url verification safe? | Ensure valid redirect url checks match exactly and cannot be circumvented by methods such as path transversal etc |
+| Does the application have a restrictive set of redirect urls? | Most Identity providers will enforce setting allowed redirect urls. Redirect urls should be as restrictive as possible to prevent attacker constructing a URL that will redirect to a malicious endpoint that harvests details |
+| Is the redirect url verification safe? | Ensure allowed redirect url checkscannot be circumvented by methods such as path transversal etc |
 | Is the application vulnerable to open redirect? | If application contains open redirect issue and this page is contained in valid redirect urls then an attacker could use this to redirect credentials to their server |
 | Does redirect url allow use of localhost? | Sometimes for development purposes redirect urls set to localhost may be treated differently and allowed. This would allow an attacker to register a domain such as localhost.simpleisbest.co.uk to harvest request details. [Paypal (2016) suffered from this issue](https://www.bleepingcomputer.com/news/security/paypal-removes-magic-word-from-oauth-authentication-procedure/) |
 | Does the application use state parameter and validate it to prevent CSRF? | The state param should contain an unguessable value linked to the users session to prevent CSRF attacks. If requests dont contain state value then attacker could initiate OAuth flow themselves and trick user into completing it and performing an action |
-| Does the application request excessive permissions? | Application should request minimal permissions required to prevent abuse |
+| Does the application request excessive permissions? | Application should request minimal permissions required to prevent potential abuse |
 
 
-## Desktop or Mobile Applications Only Checks
+## Desktop or Mobile Applications Checks
 
 | Item | Description |
 | -------- | ------- |
@@ -50,21 +52,21 @@ This article is currently a draft and looking for feedback/additional items so p
 
 | Item | Description |
 | -------- | ------- |
-| Does the other identity provider(s) validate email/mobile ownership? | Without validation of email/mobile ownership there is potential for account takeover by creating user in external identity provider |
-| Does application validate the identity provider user is from? | Application should validate which identity provider has issued token for a user to prevent malicious external identity provider masquerading as a different identity providers user. Additionally, watch out for ability to specify multiple email addresses on account |
+| Does the federated identity provider(s) validate email/mobile ownership? | Without validation of email/mobile ownership there is potential for account takeover by creating user in external identity provider |
+| Does application validate the identity provider user is from? | Application should validate which identity provider has issued token for a user to prevent malicious external identity provider masquerading as a different identity providers user. Additionally, watch out for ability to specify multiple email addresses on user account that could be abused |
 
 
 ## Token/JWT checks
 
 | Item | Description |
 | -------- | ------- |
-| Are framework/library methods used to validate token? | Where possible tried and tested framework or libraries should be used to check tokens. Ensure methods are not just checking token structure but performing validation of Issuer, Audience, Expiry etc |
+| Are framework/library methods used to validate token? | Where possible tried and tested framework or libraries should be used to check tokens. Ensure methods are not just checking token structure or syntax but perform validation of Issuer, Audience, Expiry etc |
 | Is token using default signing key? | Some frameworks may contain a default signing key for tokens. This should be changed to prevent attacker minting their own tokens |
 | Is application checking only token Issuer (iss)? |If application is only checking Issuer (iss) for public identity provider then anyone can create a an identity tenant that will issue tokens the application will trust. Note we have found this issue several times so believe this is a common mistake |
-| Is token Audience checked? | Applications should verify a tokens audience (aud) to ensure the token is intended for them |
-| Is token using strong signing key? | Without strong signing key tokens could be minted by brute force |
+| Is token Audience checked? | Services should verify a tokens audience (aud) to ensure the token is intended for them |
+| Is token using strong signing key? | Without strong signing key tokens could potentially be minted by brute force of signing key |
 | Is the token signing key accessible e.g. via LFI (local file inclusion)? | Ensure signing key securely stored and not accessible in web root to prevent attacker minting tokens |
-| Are secrets stored in tokens? | Tokens are base 64 URL encoded and easily visible through services such as [jwt.io](http://jwt.io). Do not store plaintext secrets in them (and ideally no secrets at all) |
+| Are secrets stored in tokens? | Tokens are base 64 URL encoded and easily visible through services such as [jwt.io](http://jwt.io) and [jwt.ms/](https://jwt.ms/). Do not store plaintext secrets in them (and ideally no secrets at all) |
 | Are tokens stored in application/logs? | Tokens provide access to resources and where possible should not be stored. See  article where [Okta support system contained details of customer tokens](https://www.malwarebytes.com/blog/news/2023/11/okta-breach-happened-after-employee-logged-into-personal-google-account) |
 | Does the token have an excessive lifetime configured? | The longer the lifetime of the token the more likely it is to be intercepted/leaked. Applications should balance token life time with security. Ideally refresh tokens should be used |
 | Are tokens sent over secure connection? | Tokens should be sent over secure connection to prevent interception |
@@ -103,3 +105,4 @@ With thanks to the following resources:
 * [Hacktricks OAuth Account Takeover](https://book.hacktricks.xyz/pentesting-web/oauth-to-account-takeover)
 * [Implementing Authorization in Web Applications and APIs - Brock Allen & Dominick Baier](https://www.youtube.com/watch?v=-a7JbXL0hq0)
 * [OpenID Connect & OAuth 2.0 – Security Best Practices - Dominick Baier](https://www.youtube.com/watch?v=jeRALmfyoqg)
+* [OWASP Web Application Security Testing OAuth Weaknesses](https://owasp.org/www-project-web-security-testing-guide/latest/4-Web_Application_Security_Testing/05-Authorization_Testing/05-Testing_for_OAuth_Weaknesses)
