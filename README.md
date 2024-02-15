@@ -23,10 +23,10 @@ Many of these issues myself and colleagues have seen in the wild and some we’v
 | Does the application request excessive permissions? | Application should request minimal permissions required to prevent abuse |
 
 
-## Desktop/Mobile Applications Only Checks
+## Desktop or Mobile Applications Only Checks
 
 | Item | Description |
-| Is the native/mobile application using Client Credentials Flow or have embedded secrets | Client Credentials Flow should not be used for mobile applications as client secret could be extracted from application. This issue occurred with [Twitter Mobile app, 2010](https://arstechnica.com/information-technology/2010/09/twitter-a-case-study-on-how-to-do-oauth-wrong/2/) |
+| Is the native or mobile application using Client Credentials Flow or have embedded secrets | Client Credentials Flow should not be used for mobile applications as client secret could be extracted from application. This issue occurred with [Twitter Mobile app, 2010](https://arstechnica.com/information-technology/2010/09/twitter-a-case-study-on-how-to-do-oauth-wrong/2/) |
 | Does the application use the devices browser for login? | Mobile applications should use Authorization Code Flow with PKCE with the devices browser. Providing the login screen in the application could allow application to grab username and password. Using the devices browser allows the user to benefit from browser security controls and extensions as per [rfc8252](https://datatracker.ietf.org/doc/html/rfc8252) |
 
 
