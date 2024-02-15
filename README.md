@@ -1,4 +1,4 @@
-# OAuth Oops (draft)
+# :scream_cat: OAuth Oops (draft) :scream_cat:
 
 OAuth has a steep learning curve and there are many opportunities to make a mistake.
 
