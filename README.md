@@ -14,8 +14,7 @@ Many of these issues myself and colleagues have seen in the wild and some we’v
 | Are older less secure flows enabled e.g. implicit flow | If specific OAuth flows are not required they should be disabled to reduce attack surface and ensure most secure approach used |
 | Is the correct flow being used?  | OAuth offers several flows or approaches for different purposes. Some should never be used in certain situations such as Client Credentials flow for SPA applications as this will expose the secret. |
 | For applications using Client Credentials flow are they sharing Client id and Secret? | Each instance should have unique client credentials client and secret so can be revoked/ rotated if needed |
-| Are there any third party resources (scripts/images) referenced on OAuth flow pages and leaking credentials? | If third party resources referenced on OAuth flow pages may leak details. Use ```Referrer-Policy: no-referrer or <meta name="referrer" content="no-referrer">``` to prevent this
- |
+| Are there any third party resources (scripts/images) referenced on OAuth flow pages and leaking credentials? | If third party resources referenced on OAuth flow pages may leak details. Use Referrer-Policy: no-referrer or meta referrer to prevent this |
 | Does the application have a restrictive set of redirect urls? | Most Identity providers will enforce setting redirect urls. Redirect urls should be as restrictive as possible to prevent attacker constructing a URL that will redirect to a malicious endpoint to harvest details. |
 | Is the redirect url verification safe? | Ensure valid redirect url checks match exactly and cannot be circumvented by methods such as path transversal etc |
 | Is the application vulnerable to open redirect? | If application contains open redirect issue and this page is contained in valid redirect urls then an attacker could use this to redirect credentials to their server |
