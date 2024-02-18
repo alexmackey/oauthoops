@@ -4,9 +4,7 @@ OAuth has a steep learning curve and there are many opportunities to make a mist
 
 This guidance is a work in progress and contains a list of common OAuth related mistakes and bad practices.
 
-This guide focuses on OAuth v2.1​ and friends. 
-
-These friends have their own distinct standards and include OpenID, JWT (JSON Web Token or RFC 7519), JWS (JSON Web Signatures)​ and JOSE (JavaScript Object Signing and Encryption). Issues impacting these are included as they are often found as part of OAuth implementations. 
+This guide focuses on OAuth v2.1​ and friends. These friends have their own distinct standards and include OpenID, JWT (JSON Web Token or RFC 7519), JWS (JSON Web Signatures)​ and JOSE (JavaScript Object Signing and Encryption). Issues impacting these are included as they are often found as part of OAuth implementations. 
 
 Many of these mistakes myself and colleagues have seen in the wild and some we’ve made ourselves – let's learn from these issues and build secure applications :smile:
 
@@ -66,8 +64,8 @@ This article is in draft status and looking for feedback - PR's welcome.
 | -------- | ------- |
 | Are framework/library methods used to validate token? | Where possible tried and tested framework or libraries should be used to check tokens. Ensure methods are not just checking token structure or syntax but perform validation of Issuer, Audience, Expiry etc |
 | Is token using default signing key? | Some frameworks may contain a default signing key for tokens. This should be changed to prevent attacker minting their own tokens |
-| Is application checking only token Issuer (iss)? |If application is only checking Issuer (iss) for public identity provider then anyone can create a an identity tenant that will issue tokens the application will trust. Note we have found this issue several times so believe this is a common mistake |
-| Is token Audience checked? | Services should verify a tokens audience (aud) to ensure the token is intended for them |
+| Is application checking only token Issuer (iss)? |If application is only checking Issuer (iss) for public identity provider then anyone can create a an identity tenant that will issue tokens the application will trust. Note this issue has been found several times so believe this is a common mistake |
+| Is token Audience checked? | Services should verify a tokens audience (aud) to ensure the token is intended for them. Note this issue has been found several times so believe this is a common mistake |
 | Is token using strong signing key? | Without strong signing key tokens could potentially be minted by brute force of signing key |
 | Is the token signing key accessible e.g. via LFI (local file inclusion)? | Ensure signing key securely stored and not accessible in web root to prevent attacker minting tokens |
 | Are secrets stored in tokens? | Tokens are base 64 URL encoded and easily visible through services such as [jwt.io](https://jwt.io) and [jwt.ms/](https://jwt.ms). Do not store plaintext secrets in them (and ideally no secrets at all) |
@@ -78,6 +76,8 @@ This article is in draft status and looking for feedback - PR's welcome.
 | Does application enforce authorization checks that prevent requested scope being upgraded? | Application may issue token with limited scope but if attacker adds additional scope parameter to code/token exchange request that server doesnt check permissions for may grant token with additional scope |
 
 ## Microsoft AzureB2C/AD/Entra Specific Checks
+
+This section requires additional input as is a huge area.
 
 | Item | Description |
 | -------- | ------- |
@@ -109,7 +109,7 @@ This article is in draft status and looking for feedback - PR's welcome.
 | What identity provider(s) are used? | Determine the identity providers in use – there may be multiple and social login (Facebook etc) may be enabled |
 | Are meta data endpoints accessible? | Many identity providers will provide meta data about their configuration that can be read e.g. /.well-known/oauth-authorization-server /.well-known/openid-configuration |
 | What OAuth flows are enabled? | Some identity providers will allow you to modify request parameters to use different flows |
-
+| Are secrets contained in HTML/JS | Ensure no secrets such as Client Secret etc are stored in HTML and JS files |
 
 ## References/Further reading
 
