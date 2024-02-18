@@ -4,7 +4,9 @@ OAuth has a steep learning curve and there are many opportunities to make a mist
 
 This guidance is a work in progress and contains a list of common OAuth related mistakes and bad practices.
 
-This guide focuses on OAuth v2.1​ and friends. These friends have their own distinct standards and include OpenID, JWT (JSON Web Token or RFC 7519), JWS (JSON Web Signatures)​ and JOSE (JavaScript Object Signing and Encryption). Issues impacting these are included as they are often found as part of OAuth implementations. 
+This guide focuses on OAuth v2.1​ and friends. 
+
+These friends have their own distinct standards and include OpenID, JWT (JSON Web Token or RFC 7519), JWS (JSON Web Signatures)​ and JOSE (JavaScript Object Signing and Encryption). Issues impacting these are included as they are often found as part of OAuth implementations. 
 
 Many of these mistakes myself and colleagues have seen in the wild and some we’ve made ourselves – let's learn from these issues and build secure applications :smile:
 
@@ -68,8 +70,8 @@ This article is in draft status and looking for feedback - PR's welcome.
 | Is token Audience checked? | Services should verify a tokens audience (aud) to ensure the token is intended for them |
 | Is token using strong signing key? | Without strong signing key tokens could potentially be minted by brute force of signing key |
 | Is the token signing key accessible e.g. via LFI (local file inclusion)? | Ensure signing key securely stored and not accessible in web root to prevent attacker minting tokens |
-| Are secrets stored in tokens? | Tokens are base 64 URL encoded and easily visible through services such as [jwt.io](http://jwt.io) and [jwt.ms/](https://jwt.ms/). Do not store plaintext secrets in them (and ideally no secrets at all) |
-| Are tokens stored in application/logs? | Tokens provide access to resources and where possible should not be stored. See  article where [Okta support system contained details of customer tokens](https://www.malwarebytes.com/blog/news/2023/11/okta-breach-happened-after-employee-logged-into-personal-google-account) |
+| Are secrets stored in tokens? | Tokens are base 64 URL encoded and easily visible through services such as [jwt.io](https://jwt.io) and [jwt.ms/](https://jwt.ms). Do not store plaintext secrets in them (and ideally no secrets at all) |
+| Are tokens stored in application/logs? | Tokens provide access to resources and where possible should not be stored. See Okta breach where [support ticket system contained customer tokens](https://www.malwarebytes.com/blog/news/2023/11/okta-breach-happened-after-employee-logged-into-personal-google-account) |
 | Does the token have an excessive lifetime configured? | The longer the lifetime of the token the more likely it is to be intercepted/leaked. Applications should balance token life time with security. Ideally refresh tokens should be used |
 | Are tokens sent over secure connection? | Tokens should be sent over secure connection to prevent interception |
 | Are cookies containing tokens using HTTP only, SameSite (strict) flags? | If cookies used to store tokens make use of browser security mechanisms to prevent accidental leakage and XSS attacks |
