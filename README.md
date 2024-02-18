@@ -88,6 +88,16 @@ This article is in draft status and looking for feedback - PR's welcome.
 | Item | Description |
 | -------- | ------- |
 | Are attack protections enabled? | Auth0 contains various [attack protections](https://auth0.com/docs/secure/attack-protection) that can be enabled to prevent issues such as brute force attacks, suspicious logins, use of breached credentials  |
+| Are secrets logged? | Ensure no secrets or tokens are logged in Auth0 e.g. from actions |
+| Are any Actions, Rules or Hooks using vulnerable dependancies? | Ensure no vulnerable NPM dependancies referenced |
+| Is user_metadata used to store values user should not be able to set? | The property user_metadata can be modified by users and should [not be used as a secure data store](https://auth0.com/docs/manage-users/user-accounts/metadata). User app_metadata should be used instead. |
+| For database connections is Password Strength enforced? | Enforcing more complex passwords will help protect against bruteforce attacks |
+| Is Password History used? | Preventing password reuse may protect against credential stuffing and bruteforce attacks |
+| Is Password Dictionary option enabled? | Password dictionary prevents use of [common passwords](https://github.com/danielmiessler/SecLists/blob/master/Passwords/Common-Credentials/10k-most-common.txt) and can help protect against brute force attacks |
+| Is Disallow Personal Data option enabled | Preventing use of personal data in passwords can assist with creation of stronger passwords |
+| Is the administrative email up to date/monitored? | Ensure email address is up to date and monitored as may receive alerts |
+| Are logs monitoried/automated alerts setup? | Logs should be actively monitored for potential attacks |
+
 
 
 ## Informational Checks
